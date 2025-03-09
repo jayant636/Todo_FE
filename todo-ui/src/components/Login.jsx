@@ -31,8 +31,10 @@ const Login = () => {
       .then((response) => {
         console.log(response);
 
-        const token =
-          "Basic " + window.btoa(loginData.email + ":" + loginData.password);
+        // const token =
+        //   "Basic " + window.btoa(loginData.email + ":" + loginData.password);
+
+        const token = "Bearer " + response.data.accessToken;
 
         storeToken(token);
         saveLoggedInUser(loginData.email);
