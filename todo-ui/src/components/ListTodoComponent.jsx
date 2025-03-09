@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { completeTodo, deleteTodo, getAllTodos } from "../services/TodoService";
 import { useNavigate } from "react-router-dom";
+import { isAdminUser } from "../services/AuthService";
 
 const ListTodoComponent = () => {
   const [todo, setTodo] = useState([]);
 
   const navigate = useNavigate();
+
+  const isAdmin = isAdminUser();
 
   useEffect(() => {
     listTodo();
@@ -48,11 +51,14 @@ const ListTodoComponent = () => {
   return (
     <div className="container">
       <h2 className="text-center">List of TODO's</h2>
-      <div>
-        <button className="btn btn-primary mb-2" onClick={addNewtodo}>
-          Add Task
-        </button>
-      </div>
+      {isAdmin && (
+        <div>
+          <button className="btn btn-primary mb-2" onClick={addNewtodo}>
+            Add Todo
+          </button>
+        </div>
+      )}
+
       <div>
         <table className="table table-bordered table-striped">
           <thead>
@@ -77,12 +83,14 @@ const ListTodoComponent = () => {
                   >
                     Update
                   </button>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => deleteTodoById(todo.id)}
-                  >
-                    Delete
-                  </button>
+                  {isAdmin && (
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => deleteTodoById(todo.id)}
+                    >
+                      Delete
+                    </button>
+                  )}
                   <button
                     className="btn btn-primary"
                     onClick={() => completedTodo(todo.id)}

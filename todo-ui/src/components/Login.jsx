@@ -36,8 +36,11 @@ const Login = () => {
 
         const token = "Bearer " + response.data.accessToken;
 
+        const role = response.data.role;
+
         storeToken(token);
-        saveLoggedInUser(loginData.email);
+
+        saveLoggedInUser(loginData.email, role);
         navigate("/todos");
 
         window.location.reload(false);

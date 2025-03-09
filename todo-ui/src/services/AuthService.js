@@ -18,8 +18,9 @@ export function getToken() {
   localStorage.getItem("token");
 }
 
-export function saveLoggedInUser(email) {
+export function saveLoggedInUser(email, role) {
   sessionStorage.setItem("authenticatedUser", email);
+  sessionStorage.setItem("role", role);
 }
 
 export function isUserLoggedIn() {
@@ -41,4 +42,13 @@ export function getLoggedInUser() {
 export function logout() {
   localStorage.clear();
   sessionStorage.clear();
+}
+
+export function isAdminUser() {
+  let role = sessionStorage.getItem("role");
+  if (role != null && role === "ROLE_Admin") {
+    return true;
+  } else {
+    return false;
+  }
 }
